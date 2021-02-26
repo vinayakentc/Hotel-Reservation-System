@@ -1,5 +1,6 @@
 package com.hotelreservationsystem;
 
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,5 +44,15 @@ public class HotelReservationTest {
 		HotelReservationSystem hotelReservationsystem = new HotelReservationSystem();
 		String hotel = hotelReservationsystem.findCheapestBestRatedHotelForRewards("11Sep2020", "12Sep2020");
 		Assert.assertEquals("Ridgewood",hotel);
+	}
+	
+	@Test
+	public void checkWithInvalidDateFormat() {
+		HotelReservationSystem hotelReservationsystem = new HotelReservationSystem();
+		try {
+			String hotel = hotelReservationsystem.findCheapestBestRatedHotelForRegulars("10092020", "12Sep20");
+		} catch (Exception e) {
+			Assert.assertEquals("Text '10092020' could not be parsed at index 2", e.getMessage());
+		}
 	}
 }
