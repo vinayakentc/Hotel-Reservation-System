@@ -1,5 +1,4 @@
 package com.hotelreservationsystem;
-
 public class Hotel {
 
 	String hotelName;

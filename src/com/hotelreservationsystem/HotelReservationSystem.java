@@ -76,6 +76,17 @@ public class HotelReservationSystem {
 		return hotel.getHotelName();
 	}
 
+	public String findBestRatedHotelForRegulars(String startDate, String endDate) {
+		int days = getTotalDays(startDate, endDate);
+		int weekends = getWeekends(startDate, endDate);
+		int weekdays = days - weekends;
+		Hotel hotel = hotelList.stream()
+				.max(Comparator.comparing(Hotel::getRatings))
+				.orElseThrow(NoSuchElementException::new);
+		int price = totalPrice(hotel, weekends, weekdays);
+		System.out.println("Hotel: "+hotel.getHotelName()+" ratings: "+hotel.getRatings()+" cost: "+price);
+		return hotel.getHotelName();
+	}
 	public int totalPrice(Hotel hotel, int weekends, int weekdays) {
 		return hotel.getWeekdayRatesForRegulars() * weekdays + hotel.getWeekendRatesForRegulars() * weekends;
 	}

@@ -30,4 +30,12 @@ public class HotelReservationTest {
 		String hotel = hotelReservationsystem.findCheapestBestRatedHotelForRegulars("11Sep2020", "12Sep2020");
 		Assert.assertEquals("Bridgewood",hotel);
 	}
+	
+	@Test
+	public void findBestRatedHotelForRegulars() {
+		HotelReservationSystem hotelReservationsystem = new HotelReservationSystem();
+		String hotel = hotelReservationsystem.findBestRatedHotelForRegulars("11Sep2020", "12Sep2020");
+		Assert.assertEquals("Ridgewood",hotel);
+	}
+
 }
