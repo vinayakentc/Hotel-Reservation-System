@@ -1,6 +1,10 @@
 package com.hotelreservationsystem;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.*;
 
 public class HotelReservationTest {
@@ -10,5 +14,13 @@ public class HotelReservationTest {
 		HotelReservationSystem hotelReservationsystem = new HotelReservationSystem();
 		String hotel = hotelReservationsystem.findCheapestHotelForGivenDateRangeConsideringWeekdayRatesOnly("10Sep2020","11Sep2020");
 		Assert.assertEquals("Lakewood", hotel);
+	}
+	
+	@Test
+	public void findCheapestHotelForGivenDateRange_ConsideringBothWeekdayAndWeekendRates() {
+		HotelReservationSystem hotelReservationsystem = new HotelReservationSystem();
+		List<String> actualList = hotelReservationsystem.findCheapestHotelForGivenDateRangeConsideringWeekdayAndWeekendRatesBoth("11Sep2020", "12Sep2020");
+		List<String> expectedList = new ArrayList<>(Arrays.asList("Lakewood","Bridgewood"));
+		Assert.assertEquals(expectedList, actualList);
 	}
 }
