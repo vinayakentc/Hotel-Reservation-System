@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 
 public class HotelReservationSystem {
 
-	final Hotel LAKEWOOD = new Hotel("Lakewood", 110);
-	final Hotel BRIDGEWOOD = new Hotel("Bridgewood", 160);
-	final Hotel RIDGEWOOD = new Hotel("Ridgewood", 220);
+	final Hotel LAKEWOOD = new Hotel("Lakewood", 110, 90);
+	final Hotel BRIDGEWOOD = new Hotel("Bridgewood", 160, 50);
+	final Hotel RIDGEWOOD = new Hotel("Ridgewood", 220, 150);
 
 	static String checkInDate;
 	static String checkOutDate;
