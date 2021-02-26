@@ -1,5 +1,6 @@
 package com.hotelreservationsystem;
 
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -9,9 +10,9 @@ import java.util.stream.Collectors;
 
 public class HotelReservationSystem {
 
-	final Hotel LAKEWOOD = new Hotel("Lakewood", 110, 90, 3);
-	final Hotel BRIDGEWOOD = new Hotel("Bridgewood", 150, 50, 4);
-	final Hotel RIDGEWOOD = new Hotel("Ridgewood", 220, 150, 5);
+	final Hotel LAKEWOOD = new Hotel("Lakewood", 110, 90, 80, 80, 3);
+	final Hotel BRIDGEWOOD = new Hotel("Bridgewood", 150, 50, 110, 50, 4);
+	final Hotel RIDGEWOOD = new Hotel("Ridgewood", 220, 150, 100, 40, 5);
 
 	static String checkInDate;
 	static String checkOutDate;

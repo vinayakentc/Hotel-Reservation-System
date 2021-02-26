@@ -1,6 +1,5 @@
 package com.hotelreservationsystem;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -37,5 +36,4 @@ public class HotelReservationTest {
 		String hotel = hotelReservationsystem.findBestRatedHotelForRegulars("11Sep2020", "12Sep2020");
 		Assert.assertEquals("Ridgewood",hotel);
 	}
-
 }
