@@ -1,6 +1,6 @@
 package com.hotelreservationsystem;
 
-
+import java.text.ParseException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -25,7 +25,7 @@ public class HotelReservationSystem {
 		hotelList.add(RIDGEWOOD);
 	}
 
-	public int getTotalDays(String checkInDate, String checkOutDate) {
+	public int getTotalDays(String checkInDate, String checkOutDate) throws ParseException {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("ddMMMyyyy");
 		LocalDate date1 = LocalDate.parse(checkInDate, dtf);
 		LocalDate date2 = LocalDate.parse(checkOutDate, dtf);
@@ -34,7 +34,7 @@ public class HotelReservationSystem {
 		return totalDays;
 	}
 
-	public String findCheapestHotelForGivenDateRangeConsideringWeekdayRatesOnly(String startDate, String endDate) {
+	public String findCheapestHotelForGivenDateRangeConsideringWeekdayRatesOnly(String startDate, String endDate) throws ParseException {
 		int days = getTotalDays(startDate, endDate);
 		List<Integer> price = hotelList.stream().map(hotel -> hotel.getWeekdayRatesForRegulars() * days)
 				.collect(Collectors.toList());
@@ -46,7 +46,7 @@ public class HotelReservationSystem {
 	}
 
 	public List<String> findCheapestHotelForGivenDateRangeConsideringWeekdayAndWeekendRatesBoth(String startDate,
-			String endDate) {
+			String endDate) throws ParseException {
 		int days = getTotalDays(startDate, endDate);
 		int weekends = getWeekends(startDate, endDate);
 		int weekdays = days - weekends;
@@ -61,7 +61,7 @@ public class HotelReservationSystem {
 		return cheapestHotelList;
 	}
 
-	public String findCheapestBestRatedHotelForRegulars(String startDate, String endDate) {
+	public String findCheapestBestRatedHotelForRegulars(String startDate, String endDate) throws ParseException {
 		int days = getTotalDays(startDate, endDate);
 		int weekends = getWeekends(startDate, endDate);
 		int weekdays = days - weekends;
@@ -77,7 +77,7 @@ public class HotelReservationSystem {
 		return hotel.getHotelName();
 	}
 
-	public String findBestRatedHotelForRegulars(String startDate, String endDate) {
+	public String findBestRatedHotelForRegulars(String startDate, String endDate) throws ParseException {
 		int days = getTotalDays(startDate, endDate);
 		int weekends = getWeekends(startDate, endDate);
 		int weekdays = days - weekends;
@@ -88,8 +88,29 @@ public class HotelReservationSystem {
 		System.out.println("Hotel: "+hotel.getHotelName()+" ratings: "+hotel.getRatings()+" cost: "+price);
 		return hotel.getHotelName();
 	}
+	
+	public String findCheapestBestRatedHotelForRewards(String startDate, String endDate) throws ParseException {
+		int days = getTotalDays(startDate, endDate);
+		int weekends = getWeekends(startDate, endDate);
+		int weekdays = days - weekends;
+		List<Integer> price = hotelList.parallelStream().map(hotel -> totalPriceRewards(hotel, weekends, weekdays))
+				.collect(Collectors.toList());
+		int minPrice = Collections.min(price);
+		List<Hotel> cheapestHotelList = hotelList.stream()
+				.filter(hotel -> totalPriceRewards(hotel, weekends, weekdays) == minPrice).collect(Collectors.toList());
+		Hotel hotel = cheapestHotelList.stream().max(Comparator.comparing(Hotel::getRatings))
+				.orElseThrow(NoSuchElementException::new);
+			System.out.println("Cheapest hotel rewards: " + hotel.getHotelName() + " ratings: " + hotel.getRatings() + " cost: "
+					+ minPrice);
+		return hotel.getHotelName();
+	}
+	
 	public int totalPrice(Hotel hotel, int weekends, int weekdays) {
 		return hotel.getWeekdayRatesForRegulars() * weekdays + hotel.getWeekendRatesForRegulars() * weekends;
+	}
+
+	public int totalPriceRewards(Hotel hotel, int weekends, int weekdays) {
+		return hotel.getWeekdayRatesForRewards() * weekdays + hotel.getWeekendRatesForRewards() * weekends;
 	}
 
 	public int getWeekends(String checkInDate, String checkOutDate) {

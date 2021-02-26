@@ -12,7 +12,7 @@ public class Hotel {
 	
 	public Hotel() {}
 	
-	public Hotel(String hotelName , int weekdayRatesForRegulars , int weekendRatesForRewards , int weekdayRatesForRewards , int weekendRatesForRegulars , int ratings) {
+	public Hotel(String hotelName , int weekdayRatesForRegulars , int weekendRatesForRegulars , int weekdayRatesForRewards , int weekendRatesForRewards , int ratings) {
 		this.hotelName = hotelName;
 		this.weekdayRatesForRegulars = weekdayRatesForRegulars;
 		this.weekendRatesForRegulars = weekendRatesForRegulars;
